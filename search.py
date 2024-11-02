@@ -92,12 +92,73 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    #initializare nodul sursa de tipul (pozitie, [pasi efectuati])
+    cale_nod_sursa = []
+    pozitie_nod_sursa = problem.getStartState()
+    nod_sursa = (pozitie_nod_sursa, cale_nod_sursa)
+
+    #initializare lista noduri care au fost expandate
+    expandate = []
+
+    #BFS => marginea dintre nodurile expandate si cele nedescoperite este o coada
+    bariera = util.Queue()
+    bariera.push(nod_sursa)
+
+    while bariera:
+        nod_curent = bariera.pop()
+        pozitie = nod_curent[0]
+        cale_curenta = nod_curent[1]
+        
+        if problem.isGoalState(pozitie):
+            return cale_curenta
+        
+        if pozitie not in expandate:  
+            expandate.append(pozitie)
+             
+            succesori = problem.getSuccessors(pozitie)
+            for succesor in succesori:
+                cale_noua = cale_curenta[:]
+                cale_noua.append(succesor[1])
+                nod_nou = (succesor[0], cale_noua)
+                bariera.push(nod_nou)
     util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    cale_nod_sursa = []
+    pozitie_nod_sursa = problem.getStartState()
+    #ucs => adaugam cost la nodul_sursa
+    nod_sursa = (pozitie_nod_sursa, cale_nod_sursa, 0)
+
+    expandate = []
+
+    bariera = util.PriorityQueue()
+    #priorityqueue cere ca al doilea argument sa fie prioritatea
+    bariera.push(nod_sursa, 0)
+
+    while bariera:
+        nod_curent = bariera.pop()
+        pozitie = nod_curent[0]
+        cale_curenta = nod_curent[1]
+        cost_curent = nod_curent[2]
+
+        if problem.isGoalState(pozitie):
+            return cale_curenta
+        
+        if pozitie not in expandate:  
+            expandate.append(pozitie)
+
+            succesori = problem.getSuccessors(pozitie)
+            for succesor in succesori:
+                cale_noua = cale_curenta[:]
+                cale_noua.append(succesor[1])
+                cost_nou = cost_curent + succesor[2]
+                nod_nou = (succesor[0], cale_noua, cost_nou)
+                #adaugam costul nou ca si prioritate
+                bariera.push(nod_nou, cost_nou)
     util.raiseNotDefined()
+
 
 def nullHeuristic(state, problem=None):
     """
