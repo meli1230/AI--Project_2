@@ -97,7 +97,7 @@ def depthFirstSearch(problem: SearchProblem):
     stack = util.Stack()  #this is the stack we will use while exploring the nodes
                           #uses the Stack() class in the util file
 
-    explored_states = set() #here we will store the explored nodes
+    explored_states = [] #here we will store the explored nodes
                             #analogy with data structures and algorithms:
                                 #white -> not in the explored_nodes or in the stack
                                 #gray -> in the stack, but not in the explored_nodes
@@ -106,30 +106,25 @@ def depthFirstSearch(problem: SearchProblem):
     stack.push(initial_state) #push the initial state to the stack, as we start to explore it
 
     while not stack.isEmpty(): #uses the isEmpty function, which checks if there are elements in the stack or not
-        current_state, current_path = stack.pop() #we explore the next node in the stack
-        state = current_state
+        current_state = stack.pop() #we explore the next node in the stack
+        state = current_state[0]
+        current_path = current_state[1]
 
         if problem.isGoalState(state): #if we reached the goal state
             return current_path
 
         if state not in explored_states:
-            explored_states.add(state)
+            explored_states.append(state)
 
             successors = problem.getSuccessors(state)
 
-            for successor, action, cost in successors:
-                if successor not in explored_states:
-                    new_path = current_path + [action]
-                    stack.push((successor,new_path))
+            for successor in successors:
+                new_path = current_path[:]
+                new_path.append(successor[1])
+                new_state = (successor[0], new_path)
+                stack.push(new_state)
 
-                '''successor_state = successor[0]
-                successor_do = successor[1]
-
-                new_path = (current_path + [successor_do])
-                new_state = (successor_state, new_path)
-                stack.push(new_state)'''
-    return []
-    #util.raiseNotDefined()
+    util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
