@@ -92,7 +92,7 @@ def depthFirstSearch(problem: SearchProblem):
     agent_initial_state = problem.getStartState() #spawning the agent
     initial_state = (agent_initial_state, path_from_start_state) #setting the start point, which is composed by :
                                                         # - the position of the agent (which is the spawning point)
-                                                        # - the path to the node (which is empty because the agend has not moved yet
+                                                        # - the path to the node (which is empty because the agent has not moved yet
 
     stack = util.Stack()  #this is the stack we will use while exploring the nodes
                           #uses the Stack() class in the util file
@@ -113,16 +113,16 @@ def depthFirstSearch(problem: SearchProblem):
         if problem.isGoalState(state): #if we reached the goal state
             return current_path
 
-        if state not in explored_states:
+        if state not in explored_states: #we mark the node as explored
             explored_states.append(state)
 
-            successors = problem.getSuccessors(state)
+            successors = problem.getSuccessors(state) #get the state of the successors
 
             for successor in successors:
-                new_path = current_path[:]
+                new_path = current_path[:] #shallow copy the list current_path into new_path
                 new_path.append(successor[1])
                 new_state = (successor[0], new_path)
-                stack.push(new_state)
+                stack.push(new_state) #add the new state to the stack
 
     util.raiseNotDefined()
 
@@ -148,6 +148,25 @@ def nullHeuristic(state, problem=None):
 def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
     "*** YOUR CODE HERE ***"
+    # @author: Melisa Marian
+
+    path_from_start_state = [] #create an array which will store the path from the starting node
+    agent_initial_state = problem.getStartState() #spawning the agent
+    initial_state = (agent_initial_state, path_from_start_state) #setting the start point, which is composed by:
+                                                            # - the position of the agent (which is the spawning point)
+                                                            # - the path to the node (which is empty because the agent has not moved yet)
+
+    cost_from_start_node = 0 #the cost of the path from start to the current node
+    cost_from_start_node_plus_heuristic = cost_from_start_node + heuristic(agent_initial_state, problem) #the cost of the path from start to the current node plus the heuristic
+
+    priorityQueue = util.PriorityQueue() #this is the priority queue we will use while exploring the nodes
+                                         #uses the PriorityQueue() class in the util file
+
+    explored_states = [] #here we will store the explored nodes
+
+
+
+
     util.raiseNotDefined()
 
 
