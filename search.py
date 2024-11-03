@@ -87,13 +87,56 @@ def depthFirstSearch(problem: SearchProblem):
     print("Start's successors:", problem.getSuccessors(problem.getStartState()))
     """
     "*** YOUR CODE HERE ***"
-    "here will come my code --------------------------------------------------------------------------------------------------------"
-    util.raiseNotDefined()
+    # @author: Melisa Marian
+    path_from_start_state = [] #create an array which will store the path from the starting node
+    agent_initial_state = problem.getStartState() #spawning the agent
+    initial_state = (agent_initial_state, path_from_start_state) #setting the start point, which is composed by :
+                                                        # - the position of the agent (which is the spawning point)
+                                                        # - the path to the node (which is empty because the agend has not moved yet
+
+    stack = util.Stack()  #this is the stack we will use while exploring the nodes
+                          #uses the Stack() class in the util file
+
+    explored_states = set() #here we will store the explored nodes
+                            #analogy with data structures and algorithms:
+                                #white -> not in the explored_nodes or in the stack
+                                #gray -> in the stack, but not in the explored_nodes
+                                #black -> in the explored nodes and not in the stack
+
+    stack.push(initial_state) #push the initial state to the stack, as we start to explore it
+
+    while not stack.isEmpty(): #uses the isEmpty function, which checks if there are elements in the stack or not
+        current_state, current_path = stack.pop() #we explore the next node in the stack
+        state = current_state
+
+        if problem.isGoalState(state): #if we reached the goal state
+            return current_path
+
+        if state not in explored_states:
+            explored_states.add(state)
+
+            successors = problem.getSuccessors(state)
+
+            for successor, action, cost in successors:
+                if successor not in explored_states:
+                    new_path = current_path + [action]
+                    stack.push((successor,new_path))
+
+                '''successor_state = successor[0]
+                successor_do = successor[1]
+
+                new_path = (current_path + [successor_do])
+                new_state = (successor_state, new_path)
+                stack.push(new_state)'''
+    return []
+    #util.raiseNotDefined()
 
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
     util.raiseNotDefined()
+
+
 
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""

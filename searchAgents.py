@@ -326,7 +326,16 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
+            # @author: Melisa Marian
+            x, y = state
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
 
+            if not self.walls[nextx][nexty]:
+                nextstate = (nextx, nexty)
+                cost = 1
+                successors.append((nextstate, action, cost))
+            "***end of my code***"
         self._expanded += 1 # DO NOT CHANGE
         return successors
 
