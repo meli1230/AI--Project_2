@@ -92,6 +92,7 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    #Iulia Anca
     #initializare nodul sursa de tipul (pozitie, [pasi efectuati])
     cale_nod_sursa = []
     pozitie_nod_sursa = problem.getStartState()
@@ -126,6 +127,7 @@ def breadthFirstSearch(problem: SearchProblem):
 def uniformCostSearch(problem: SearchProblem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
+    #Iulia Anca
     cale_nod_sursa = []
     pozitie_nod_sursa = problem.getStartState()
     #ucs => adaugam cost la nodul_sursa
