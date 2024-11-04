@@ -177,29 +177,22 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
         if problem.isGoalState(positioning): #if we reached the goal state
             return path
 
-        if positioning in explored_states: #if the state was previously explored
-            continue
+        if positioning not in explored_states: #if the state was previously explored
+            explored_states.add(positioning)
 
-        explored_states.add(positioning)
+            if cost <= costs.get(positioning, float('inf')): #check if the current cost is good
+                successors = problem.getSuccessors(positioning)
 
-        if cost <= costs.get(positioning, float('inf')): #check if the current cost is good
-            successors = problem.getSuccessors(positioning)
+                for successor in successors:
+                    new_path = path[:] #make a shallow copy of the path list and put it in the new path
+                    new_path.append(successor[1]) #add the path to the successor to the path
+                    new_cost = cost + successor[2] #add the cost of the successor to the path
+                    new_cost_with_heuristic = new_cost + heuristic(successor[0], problem) #add the heuristic to the cost
 
-            for successor in successors:
-                following_state = successor[0] #get successor's position
-                move = successor[1] #get successor's path
-                following_cost = successor[2] #get successor's cost
-
-                new_path = path + [move] #make the move
-                new_cost = cost + following_cost #get the new cost after the move
-                new_cost_with_heuristic = new_cost + heuristic(following_state, problem) #get the cost with heuristic
-
-                if new_cost < costs.get(following_state, float('inf')): #check if this is the best path or not
-                    costs[following_state] = new_cost #change the cost with the new one
-                    following_node = (following_state, new_path, new_cost)
-                    priorityQueue.push(following_node, new_cost_with_heuristic) #push the node into the queue
-
-
+                    if new_cost < costs.get(successor[0], float('inf')): #check if this is the best cost
+                        costs[successor[0]] = new_cost #assign the new cost to the successor
+                        new_state = (successor[0], new_path, new_cost) #update the current state with the new state, the path and the cost
+                        priorityQueue.push(new_state, new_cost_with_heuristic) #push in the queue
 
     util.raiseNotDefined()
 
