@@ -232,7 +232,7 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
 
     #a* loop
     while not priorityQueue.isEmpty(): #we use isEmpty method from priorityQueue class to check if the queue has any elements
-        state = priorityQueue.pop()
+        state = priorityQueue.pop() #pop the queue
         positioning = state[0]  #get the position of the current note
         path = state[1] #get the path followed to this point
         cost = state[2] #get the cost to this point
