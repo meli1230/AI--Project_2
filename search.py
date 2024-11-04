@@ -107,16 +107,16 @@ def depthFirstSearch(problem: SearchProblem):
 
     while not stack.isEmpty(): #uses the isEmpty function, which checks if there are elements in the stack or not
         current_state = stack.pop() #we explore the next node in the stack
-        state = current_state[0]
+        positioning = current_state[0]
         current_path = current_state[1]
 
-        if problem.isGoalState(state): #if we reached the goal state
+        if problem.isGoalState(positioning): #if we reached the goal state
             return current_path
 
-        if state not in explored_states: #we mark the node as explored
-            explored_states.append(state)
+        if positioning not in explored_states: #we mark the node as explored
+            explored_states.append(positioning)
 
-            successors = problem.getSuccessors(state) #get the state of the successors
+            successors = problem.getSuccessors(positioning) #get the state of the successors
 
             for successor in successors:
                 new_path = current_path[:] #shallow copy the list current_path into new_path
@@ -152,18 +152,52 @@ def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
 
     path_from_start_state = [] #create an array which will store the path from the starting node
     agent_initial_state = problem.getStartState() #spawning the agent
-    initial_state = (agent_initial_state, path_from_start_state) #setting the start point, which is composed by:
+    initial_state = (agent_initial_state, path_from_start_state, 0) #setting the start point, which is composed by:
                                                             # - the position of the agent (which is the spawning point)
                                                             # - the path to the node (which is empty because the agent has not moved yet)
+                                                            # - initial cost (which is 0 as we have not started moving yet)
 
-    cost_from_start_node = 0 #the cost of the path from start to the current node
-    cost_from_start_node_plus_heuristic = cost_from_start_node + heuristic(agent_initial_state, problem) #the cost of the path from start to the current node plus the heuristic
+    # cost_from_start_node = 0 #the cost of the path from start to the current node
+    # cost_from_start_node_plus_heuristic = cost_from_start_node + heuristic(agent_initial_state, problem) #the cost of the path from start to the current node plus the heuristic
 
     priorityQueue = util.PriorityQueue() #this is the priority queue we will use while exploring the nodes
-                                         #uses the PriorityQueue() class in the util file
+                                          #uses the PriorityQueue() class in the util file
+    priorityQueue.push(initial_state, heuristic(agent_initial_state, problem)) #getting the first state in the priority queue
 
-    explored_states = [] #here we will store the explored nodes
+    costs = {agent_initial_state: 0} #keep track of costs in a dictionary; append the initial node and its cost
+    explored_states = set() #here we will store the explored nodes
 
+    #a* loop
+    while not priorityQueue.isEmpty(): #we use isEmpty method from priorityQueue class to check if the queue has any elements
+        state = priorityQueue.pop()
+        positioning = state[0]  #get the position of the current note
+        path = state[1] #get the path followed to this point
+        cost = state[2] #get the cost to this point
+
+        if problem.isGoalState(positioning): #if we reached the goal state
+            return path
+
+        if positioning in explored_states: #if the state was previously explored
+            continue
+
+        explored_states.add(positioning)
+
+        if cost <= costs.get(positioning, float('inf')): #check if the current cost is good
+            successors = problem.getSuccessors(positioning)
+
+            for successor in successors:
+                following_state = successor[0] #get successor's position
+                move = successor[1] #get successor's path
+                following_cost = successor[2] #get successor's cost
+
+                new_path = path + [move] #make the move
+                new_cost = cost + following_cost #get the new cost after the move
+                new_cost_with_heuristic = new_cost + heuristic(following_state, problem) #get the cost with heuristic
+
+                if new_cost < costs.get(following_state, float('inf')): #check if this is the best path or not
+                    costs[following_state] = new_cost #change the cost with the new one
+                    following_node = (following_state, new_path, new_cost)
+                    priorityQueue.push(following_node, new_cost_with_heuristic) #push the node into the queue
 
 
 
