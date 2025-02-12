@@ -2,7 +2,7 @@
 This project implements classic **search algorithms** to help Pacman navigate mazes efficiently, find food, and reach target locations optimally.
 
 ## **License**
-This project is for educational purposes and follows the **Berkeley AI Pac-Man Project** framework. 
+This project is for educational purposes and follows the **Berkeley AI Pacman Project** framework. 
 Please note that the project has been solved in teams of 2. My work is marked under `@Author: Melisa Marian`.
 
 ## **Overview**
