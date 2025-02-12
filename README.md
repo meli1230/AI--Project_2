@@ -39,15 +39,13 @@ Test different search strategies by running:
   python pacman.py -h
   ```
   
-- Run the autograder to test the given implementations:
+- Run the autograder to test the given implementation:
 ```bash
 python autograder.py
 ```
 
 ## **File Structure**
-- **`search.py`** – Implements the search algorithms.
-- **`searchAgent.py`** – Defines search-based agents using implemented algorithms.
-- **`pacman.py`** – Main game engine.
-- **`util.py`** – Helper functions for data structures.
-
-## **Evaluation**
+- **`search.py`** – Implements the search algorithms
+- **`searchAgent.py`** – Defines search-based agents using implemented algorithms
+- **`pacman.py`** – Main game engine
+- **`util.py`** – Helper functions for data structures
