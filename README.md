@@ -3,7 +3,9 @@ This project implements classic **search algorithms** to help Pacman navigate ma
 
 ## **License**
 This project is for educational purposes and follows the **Berkeley AI Pacman Project** framework. <br/>
-Please note that the project has been solved in teams of 2. My work is marked under `@Author: Melisa Marian`.
+Please note that the project has been solved in teams of 2:
+- Melisa Marian's work is marked under `@Author: Melisa Marian`
+- Iulia Ana Anca's work is marked under `Iulia Anca`
 
 ## **Overview**
 The goal of this project is to apply fundamental **AI search algorithms** in a grid-based environment. Pacman must navigate through mazes using different strategies, each with its strengths and limitations.
